@@ -119,8 +119,6 @@ while True:
 
                 start += 1
 
-#    cv2.imshow('diff', diff)
-#    cv2.imshow('Cont', Cont)
     cv2.imshow('thresh', Thresh)
     
     if grayScale:
