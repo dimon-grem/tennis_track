@@ -1,6 +1,13 @@
 import cv2
 import numpy as np
+<<<<<<< HEAD
 #import math
+=======
+import math
+
+def dist(x,y,X,Y):
+    return math.sqrt((x-X)**2 + (y-Y)**2)
+>>>>>>> 549d599b94a20ae6fa5b8cedf6c5f451e0716476
 
 def dist(x,y,X,Y):
     return np.sqrt((x-X)**2 + (y-Y)**2)
@@ -8,7 +15,11 @@ def dist(x,y,X,Y):
 start = 0
 grayScale = True
 cap = cv2.VideoCapture('Main2.mp4')
+<<<<<<< HEAD
 cap.set(cv2.CAP_PROP_POS_MSEC, 250000)
+=======
+cap.set(cv2.CAP_PROP_POS_MSEC,450000)
+>>>>>>> 549d599b94a20ae6fa5b8cedf6c5f451e0716476
 back = cv2.imread('back.jpg', 0)
 back2 = cv2.imread('frame21.jpg', 0)
 
@@ -18,9 +29,15 @@ x, y = -1, -1
 while True:
     
     if not paused:
+<<<<<<< HEAD
         
         ret, frame = cap.read()
         
+=======
+        
+        ret, frame = cap.read()
+        
+>>>>>>> 549d599b94a20ae6fa5b8cedf6c5f451e0716476
         if ret == True:
             
             if not paused:
@@ -68,8 +85,17 @@ while True:
                         continue
                     ccx = int(Mm['m10']/Mm['m00'])
                     ccy = int(Mm['m01']/Mm['m00'])
+<<<<<<< HEAD
                     if dist(Cx, Cy, ccx, ccy) <= 200:
                         manCnt.append(elem)
+=======
+                    
+                    # убираем элементы с непропорционально большими/малыми высотами, т.е. линии
+                    _,_,w,h = cv2.boundingRect(elem)
+                    if 0.5 < w/h < 3:
+                        if dist(Cx, Cy, ccx, ccy) <= 200:
+                            manCnt.append(elem)
+>>>>>>> 549d599b94a20ae6fa5b8cedf6c5f451e0716476
                 Cont = cv2.drawContours(thresh, manCnt, -1, 60, -1)
                 
                 # находим два самых нижних контура среди различных контуров игрока
@@ -85,6 +111,7 @@ while True:
                         minx2, miny2 = cx, cy
                         
                 # обработка случая, когда одна нога находится за другой
+<<<<<<< HEAD
 #                if abs(minx1-minx2) < 10:
 #                    minx2 = minx1
 #                    miny2 = miny1
@@ -93,12 +120,22 @@ while True:
                 # выводим результаты в окно с контурами
                 Thresh = cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR)
                 Frame = cv2.cvtColor(Frame, cv2.COLOR_GRAY2BGR)
+=======
+                if abs(minx1-minx2) < 10:
+                    minx2 = minx1
+                    miny2 = miny1
+                    cv2.putText(frame, '!!!', (80, 80), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 5)
+                
+                # выводим результаты в окно с контурами
+                Thresh = cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR)
+>>>>>>> 549d599b94a20ae6fa5b8cedf6c5f451e0716476
                 cv2.circle(Thresh, (Cx, Cy), 5, (0, 150, 0), -1)
                 cv2.circle(Thresh, (minx1, miny1), 5, (0, 0, 255), -1)
                 cv2.circle(Thresh, (minx2, miny2), 5, (0, 0, 255), -1)
                 cv2.line(Thresh, (Cx, Cy), (minx1, miny1), (255, 0, 0), 2)
                 cv2.line(Thresh, (Cx, Cy), (minx2, miny2), (255, 0, 0), 2)
                 
+<<<<<<< HEAD
                 if grayScale:
                     # выводим результаты в окно с исходной картинкой (ч/б)
                     cv2.circle(Frame, (minx1, miny1), 5, (0, 0, 255), -1)
@@ -125,12 +162,29 @@ while True:
         cv2.imshow('frame', Frame)
     else:
         cv2.imshow('frame', frame)
+=======
+                # выводим результаты в окно с исходной картинкой
+                cv2.circle(frame, (minx1, miny1), 5, (0, 0, 255), -1)
+                cv2.circle(frame, (minx2, miny2), 5, (0, 0, 255), -1)
+                cv2.circle(frame, (Cx, Cy), 5, (0, 150, 0), -1)
+                cv2.line(frame, (Cx, Cy), (minx1, miny1), (255, 0, 0), 2)
+                cv2.line(frame, (Cx, Cy), (minx2, miny2), (255, 0, 0), 2)
+
+    cv2.imshow('diff', diff)
+    cv2.imshow('Cont', Cont)
+    cv2.imshow('thresh', Thresh)
+    cv2.imshow('frame', frame)
+>>>>>>> 549d599b94a20ae6fa5b8cedf6c5f451e0716476
 
     k = cv2.waitKey(2)
 
     if k & 0xFF == ord(' '):
         paused = not paused
+<<<<<<< HEAD
     if k & 0xFF == 27:
+=======
+    elif k & 0xFF == 27:
+>>>>>>> 549d599b94a20ae6fa5b8cedf6c5f451e0716476
         break
     if k & 0xFF == ord('q'):
         grayScale = not grayScale
